@@ -25,6 +25,14 @@ let Tie1: game.LedSprite = null
 let Missle: game.LedSprite = null
 let Xwing: game.LedSprite = null
 let Alt = 0
+basic.showString("Rogue Squadron")
+images.createBigImage(`
+    . . . . . . . . . .
+    . . . # . # # # . .
+    . # # . # # . . . .
+    . . . . . # # # . .
+    . . . . . . . . . .
+    `).scrollImage(1, 200)
 Alt = 2
 Xwing = game.createSprite(0, 2)
 basic.forever(function () {
