@@ -20,6 +20,9 @@ input.onButtonPressed(Button.B, function () {
     }
     Xwing.set(LedSpriteProperty.Y, Alt)
 })
+input.onGesture(Gesture.Shake, function () {
+    basic.showNumber(game.score())
+})
 let Tie2: game.LedSprite = null
 let Tie1: game.LedSprite = null
 let Missle: game.LedSprite = null
@@ -46,6 +49,9 @@ basic.forever(function () {
             game.addScore(50)
             Tie1.delete()
         }
+        if (Tie1.isTouching(Xwing)) {
+            game.removeLife(1)
+        }
         basic.pause(200)
     }
     Tie1.delete()
@@ -59,6 +65,9 @@ basic.forever(function () {
         if (Tie2.isTouching(Missle)) {
             game.addScore(50)
             Tie2.delete()
+        }
+        if (Tie2.isTouching(Xwing)) {
+            game.removeLife(1)
         }
         basic.pause(200)
     }
