@@ -25,6 +25,8 @@ let Tie1: game.LedSprite = null
 let Missle: game.LedSprite = null
 let Xwing: game.LedSprite = null
 let Alt = 0
+game.setScore(0)
+game.setLife(5)
 images.createBigImage(`
     . . . . . . . . . .
     . . . # . # # # . .
@@ -40,6 +42,10 @@ basic.forever(function () {
     Tie1.turn(Direction.Right, 180)
     for (let index = 0; index <= 4; index++) {
         Tie1.move(1)
+        if (Tie1.isTouching(Missle)) {
+            game.addScore(50)
+            Tie1.delete()
+        }
         basic.pause(200)
     }
     Tie1.delete()
@@ -50,6 +56,10 @@ basic.forever(function () {
     Tie1.turn(Direction.Right, 180)
     for (let index = 0; index <= 4; index++) {
         Tie2.move(1)
+        if (Tie2.isTouching(Missle)) {
+            game.addScore(50)
+            Tie2.delete()
+        }
         basic.pause(200)
     }
     Tie2.delete()
