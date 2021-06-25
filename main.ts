@@ -25,7 +25,6 @@ let Tie1: game.LedSprite = null
 let Missle: game.LedSprite = null
 let Xwing: game.LedSprite = null
 let Alt = 0
-basic.showString("Rogue Squadron")
 images.createBigImage(`
     . . . . . . . . . .
     . . . # . # # # . .
