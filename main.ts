@@ -7,7 +7,9 @@ input.onButtonPressed(Button.A, function () {
     Missle.set(LedSpriteProperty.Y, Alt)
 })
 input.onButtonPressed(Button.AB, function () {
-    soundExpression.spring.play()
+    if (1 == sound) {
+        soundExpression.spring.play()
+    }
     while (!(4 == Missle.get(LedSpriteProperty.X))) {
         Missle.move(1)
         basic.pause(125)
@@ -24,16 +26,31 @@ input.onButtonPressed(Button.B, function () {
     Missle.set(LedSpriteProperty.Y, Alt)
 })
 input.onGesture(Gesture.Shake, function () {
+    doTheme()
     basic.showNumber(game.score())
 })
+input.onLogoEvent(TouchButtonEvent.Touched, function () {
+    sound += 1
+    if (sound > 1) {
+        basic.showIcon(IconNames.No)
+        sound = 0
+    } else {
+        basic.showIcon(IconNames.EigthNote)
+        doTheme()
+    }
+})
+function doTheme () {
+    music.playMelody("C G F E D C5 G - ", 107)
+}
 let Tie2: game.LedSprite = null
 let Tie1: game.LedSprite = null
 let Missle: game.LedSprite = null
 let Xwing: game.LedSprite = null
 let Alt = 0
+let sound = 0
 game.setScore(0)
 game.setLife(5)
-music.playMelody("C G F E D C5 G - ", 107)
+sound = 0
 images.createBigImage(`
     . . . . . . . . . .
     . . . # . # # # . .
@@ -49,7 +66,7 @@ basic.forever(function () {
     Tie1 = game.createSprite(4, randint(0, 4))
     Tie1.turn(Direction.Right, 180)
     for (let index = 0; index <= 4; index++) {
-        Tie1.move(1)
+        Tie1.move(randint(1, 3) / 2)
         if (Tie1.isTouching(Xwing)) {
             game.removeLife(1)
         }
@@ -65,7 +82,7 @@ basic.forever(function () {
     Tie2 = game.createSprite(4, randint(0, 4))
     Tie2.turn(Direction.Right, 180)
     for (let index = 0; index <= 4; index++) {
-        Tie2.move(1)
+        Tie2.move(randint(1, 3) / 2)
         if (Tie2.isTouching(Xwing)) {
             game.removeLife(1)
         }
