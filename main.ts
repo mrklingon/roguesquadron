@@ -42,8 +42,8 @@ input.onLogoEvent(TouchButtonEvent.Touched, function () {
 function doTheme () {
     music.playMelody("C G F E D C5 G - ", 107)
 }
-let Tie2: game.LedSprite = null
 let Tie1: game.LedSprite = null
+let Tie2: game.LedSprite = null
 let Missle: game.LedSprite = null
 let Xwing: game.LedSprite = null
 let Alt = 0
@@ -63,22 +63,6 @@ Xwing = game.createSprite(0, 2)
 Missle = game.createSprite(Xwing.get(LedSpriteProperty.X), Xwing.get(LedSpriteProperty.Y))
 basic.forever(function () {
     basic.pause(randint(500, 3000))
-    Tie1 = game.createSprite(4, randint(0, 4))
-    Tie1.turn(Direction.Right, 180)
-    for (let index = 0; index <= 4; index++) {
-        Tie1.move(randint(1, 3) / 2)
-        if (Tie1.isTouching(Xwing)) {
-            game.removeLife(1)
-        }
-        if (Missle.isTouching(Tie1)) {
-            game.addScore(25)
-        }
-        basic.pause(200)
-    }
-    Tie1.delete()
-})
-basic.forever(function () {
-    basic.pause(randint(500, 3000))
     Tie2 = game.createSprite(4, randint(0, 4))
     Tie2.turn(Direction.Right, 180)
     for (let index = 0; index <= 4; index++) {
@@ -86,10 +70,46 @@ basic.forever(function () {
         if (Tie2.isTouching(Xwing)) {
             game.removeLife(1)
         }
+        if (Tie2.get(LedSpriteProperty.Y) < Xwing.get(LedSpriteProperty.Y)) {
+            Tie2.change(LedSpriteProperty.Y, 1)
+        }
+        if (Tie2.get(LedSpriteProperty.Y) > Xwing.get(LedSpriteProperty.Y)) {
+            Tie2.change(LedSpriteProperty.Y, -1)
+        }
         if (Missle.isTouching(Tie2)) {
             game.addScore(25)
+            Tie2.delete()
+            index = 4
         }
-        basic.pause(200)
+        basic.pause(400)
     }
-    Tie2.delete()
+    if (!(Tie2.isDeleted())) {
+        Tie2.delete()
+    }
+})
+basic.forever(function () {
+    basic.pause(randint(500, 3000))
+    Tie1 = game.createSprite(4, 2)
+    Tie1.turn(Direction.Right, 180)
+    for (let index = 0; index <= 4; index++) {
+        Tie1.move(randint(1, 3) / 2)
+        if (Tie1.isTouching(Xwing)) {
+            game.removeLife(1)
+        }
+        if (Tie1.get(LedSpriteProperty.Y) < Xwing.get(LedSpriteProperty.Y)) {
+            Tie1.change(LedSpriteProperty.Y, 1)
+        }
+        if (Tie1.get(LedSpriteProperty.Y) > Xwing.get(LedSpriteProperty.Y)) {
+            Tie1.change(LedSpriteProperty.Y, -1)
+        }
+        if (Missle.isTouching(Tie1)) {
+            game.addScore(25)
+            Tie1.delete()
+            index = 4
+        }
+        basic.pause(400)
+    }
+    if (!(Tie1.isDeleted())) {
+        Tie1.delete()
+    }
 })
